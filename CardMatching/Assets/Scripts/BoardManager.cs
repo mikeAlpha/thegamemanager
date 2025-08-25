@@ -6,44 +6,52 @@ using System.Collections.Generic;
 public class BoardManager : MonoBehaviour
 {
     public GameObject cardPrefab;
-    public Sprite[] cardSprites;
 
-    [Header("Grid Settings")]
-    public int rows = 4;
-    public int columns = 4;
-    public Vector2 spacing = new Vector2(10, 10);
+    private LevelData currentLevelData;
+    //public Sprite[] cardSprites;
+
+    //[Header("Grid Settings")]
+    //public int rows = 4;
+    //public int columns = 4;
+    //public Vector2 spacing = new Vector2(10, 10);
 
     private GridLayoutGroup gridLayout;
 
-    void Start()
+    private void OnEnable()
     {
+        EventHandler.RegisterEvent<LevelData>(GameStaticEvents.OnBoardManagerDataUpdate, InitBoard);
+    }
+
+    private void OnDisable()
+    {
+        EventHandler.UnregisterEvent<LevelData>(GameStaticEvents.OnBoardManagerDataUpdate, InitBoard);
+    }
+
+    void InitBoard(LevelData data)
+    {
+        currentLevelData = data;
         gridLayout = GetComponent<GridLayoutGroup>();
-        gridLayout.spacing = spacing;
+        gridLayout.spacing = currentLevelData.spacing;
 
         SetupBoard();
     }
 
-    //void Update()
-    //{
-    //    AdjustCellSize();
-    //}
-
-void AdjustCellSize()
-{
-    RectTransform rt = GetComponent<RectTransform>();
-    float cellWidth = (rt.rect.width - (spacing.x * (columns - 1))) / columns;
-    float cellHeight = (rt.rect.height - (spacing.y * (rows - 1))) / rows;
-    gridLayout.cellSize = new Vector2(cellWidth, cellHeight);
-}
+    void AdjustCellSize()
+    {
+        RectTransform rt = GetComponent<RectTransform>();
+        float cellWidth = (rt.rect.width - (currentLevelData.spacing.x * (currentLevelData.columns - 1))) / currentLevelData.columns;
+        float cellHeight = (rt.rect.height - (currentLevelData.spacing.y * (currentLevelData.rows - 1))) / currentLevelData.rows;
+        gridLayout.cellSize = new Vector2(cellWidth, cellHeight);
+    }
 
     void SetupBoard()
     {
-        int totalCards = rows * columns;
+        int totalCards = currentLevelData.rows * currentLevelData.columns;
         List<int> cardIds = new List<int>();
 
         for (int i = 0; i < totalCards / 2; i++)
         {
-            int spriteIndex = i % cardSprites.Length;
+            int spriteIndex = i % currentLevelData.cardSprites.Length;
             cardIds.Add(spriteIndex);
             cardIds.Add(spriteIndex);
         }
@@ -56,20 +64,19 @@ void AdjustCellSize()
             cardIds[randomIndex] = temp;
         }
 
-        gridLayout.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-        gridLayout.constraintCount = columns;
+        cardIds.Shuffle();
 
-        RectTransform rt = GetComponent<RectTransform>();
-        float cellWidth = (rt.rect.width - (spacing.x * (columns - 1))) / columns;
-        float cellHeight = (rt.rect.height - (spacing.y * (rows - 1))) / rows;
-        gridLayout.cellSize = new Vector2(cellWidth, cellHeight);
+        gridLayout.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+        gridLayout.constraintCount = currentLevelData.columns;
+
+        AdjustCellSize();
 
         foreach (int id in cardIds)
         {
             GameObject cardObj = Instantiate(cardPrefab, transform);
             Card card = cardObj.GetComponent<Card>();
             card.cardId = id;
-            card.frontSprite = cardSprites[id];
+            card.frontSprite = currentLevelData.cardSprites[id];
         }
     }
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Threading.Tasks;
 
 public class Card : MonoBehaviour
 {
@@ -10,60 +11,58 @@ public class Card : MonoBehaviour
 
     private Image image;
     private bool isFlipped = false;
-    private GameManager gameManager;
 
     void Start()
     {
         image = GetComponent<Image>();
         image.sprite = backSprite;
-        gameManager = FindObjectOfType<GameManager>();
-        StartCoroutine(InitCard());
+        InitCard();
     }
 
-    IEnumerator InitCard()
+    public async void InitCard()
     {
-        StartCoroutine(FlipToFront());
-        yield return new WaitForSeconds(2);
-        StartCoroutine(FlipToBack());
+        await FlipToFront();
+        await Utils.WaitForSeconds(2);
+        await FlipToBack();
     }
 
-    public void OnCardClicked()
+    public async void OnCardClicked()
     {
         if (!isFlipped && gameObject.activeSelf)
         {
-            StartCoroutine(FlipToFront());
-            gameManager.OnCardFlipped(this);
+            await FlipToFront();
+            EventHandler.ExecuteEvent(GameStaticEvents.OnCardFlippedUpdate, this);
         }
     }
 
-    public IEnumerator FlipToFront()
+    public async Task FlipToFront()
     {
         isFlipped = true;
-        yield return AnimateFlip(backSprite, frontSprite);
+        await AnimateFlip(backSprite, frontSprite);
     }
 
-    public IEnumerator FlipToBack()
+    public async Task FlipToBack()
     {
         isFlipped = false;
-        yield return AnimateFlip(frontSprite, backSprite);
+        await AnimateFlip(frontSprite, backSprite);
     }
 
-    public void HideCard()
+    public async Task HideCard()
     {
-        StartCoroutine(FadeOut());
+        await FadeOut();
     }
 
-    public void ShakeCard()
+    public async Task ShakeCard()
     {
-        StartCoroutine(Shake());
+        await Shake();
     }
 
-    private IEnumerator AnimateFlip(Sprite fromSprite, Sprite toSprite)
+    private async Task AnimateFlip(Sprite fromSprite, Sprite toSprite)
     {
-        for (float t = 0; t < 0.5f; t += Time.deltaTime * 4)
+        for (float t = 0; t < 1f; t += Time.deltaTime * 4)
         {
             transform.localScale = new Vector3(Mathf.Lerp(1, 0, t), 1, 1);
-            yield return null;
+            await Task.Yield();
         }
 
         image.sprite = toSprite;
@@ -71,22 +70,22 @@ public class Card : MonoBehaviour
         for (float t = 0; t < 1f; t += Time.deltaTime * 4)
         {
             transform.localScale = new Vector3(Mathf.Lerp(0, 1, t), 1, 1);
-            yield return null;
+            await Task.Yield();
         }
     }
 
-    private IEnumerator FadeOut()
+    private async Task FadeOut()
     {
         CanvasGroup cg = gameObject.AddComponent<CanvasGroup>();
         for (float t = 0; t < 1; t += Time.deltaTime)
         {
             cg.alpha = Mathf.Lerp(1, 0, t);
-            yield return null;
+            await Task.Yield();
         }
         //gameObject.SetActive(false);
     }
 
-    private IEnumerator Shake()
+    private async Task Shake()
     {
         Vector3 startPos = transform.localPosition;
         float shakeTime = 0.3f;
@@ -99,7 +98,7 @@ public class Card : MonoBehaviour
             transform.localPosition = startPos + new Vector3(x, y, 0);
 
             elapsed += Time.deltaTime;
-            yield return null;
+            await Task.Yield();
         }
 
         transform.localPosition = startPos;

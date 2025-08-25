@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     private int comboCount = 0;
     private float lastMatchTime;
-    private float comboWindow = 10f;
+    private float comboWindow = 3f;
 
     private int score = 0;
 
@@ -18,19 +19,33 @@ public class GameManager : MonoBehaviour
     public TMP_Text scoreText;
     public TMP_Text comboText;
 
+    [Header("Level Data")]
+    public LevelDataSO[] levelDatas;
+
+    private void OnEnable()
+    {
+        EventHandler.RegisterEvent<Card>(GameStaticEvents.OnCardFlippedUpdate, OnCardFlipped);
+    }
+
+    private void OnDisable()
+    {
+        EventHandler.UnregisterEvent<Card>(GameStaticEvents.OnCardFlippedUpdate, OnCardFlipped);
+    }
+
     void Start()
     {
         UpdateScoreUI();
+        EventHandler.ExecuteEvent(GameStaticEvents.OnBoardManagerDataUpdate, levelDatas[0].levelData);
     }
 
     public void OnCardFlipped(Card card)
     {
         flipQueue.Enqueue(card);
         if (!isChecking)
-            StartCoroutine(ProcessFlips());
+            _ = ProcessFlips();
     }
 
-    private IEnumerator ProcessFlips()
+    private async Task ProcessFlips()
     {
         isChecking = true;
 
@@ -39,39 +54,33 @@ public class GameManager : MonoBehaviour
             Card first = flipQueue.Dequeue();
             Card second = flipQueue.Dequeue();
 
-            yield return new WaitForSeconds(0.5f);
+            await Utils.WaitForSeconds(0.5f);
 
             if (first.cardId == second.cardId)
             {
-                first.HideCard();
-                second.HideCard();
+                await Task.WhenAll(first.HideCard(), second.HideCard());
 
                 if (Time.time - lastMatchTime <= comboWindow)
-                {
                     comboCount++;
-                }
                 else
-                {
                     comboCount = 1;
-                }
+
                 lastMatchTime = Time.time;
 
                 int points = 100 * comboCount;
                 score += points;
 
-                Debug.Log("Match! Combo x" + comboCount + " → +" + points + " points");
+                Debug.Log($"Match! Combo x{comboCount} → +{points} points");
 
                 UpdateScoreUI();
             }
             else
             {
-                first.ShakeCard();
-                second.ShakeCard();
+                await Task.WhenAll(first.ShakeCard(), second.ShakeCard());
 
-                yield return new WaitForSeconds(0.5f);
+                await Utils.WaitForSeconds(0.5f);
 
-                StartCoroutine(first.FlipToBack());
-                StartCoroutine(second.FlipToBack());
+                await Task.WhenAll(first.FlipToBack(), second.FlipToBack());
 
                 comboCount = 0;
                 UpdateScoreUI();
@@ -87,11 +96,6 @@ public class GameManager : MonoBehaviour
             scoreText.text = "Score: " + score;
 
         if (comboText != null)
-        {
-            if (comboCount > 1)
-                comboText.text = "Combo x" + comboCount + "!";
-            else
-                comboText.text = "";
-        }
+            comboText.text = comboCount > 1 ? $"Combo x{comboCount}!" : "";
     }
 }
