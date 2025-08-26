@@ -93,6 +93,7 @@ MonoBehaviour:
   cardId: 0
   frontSprite: {fileID: 0}
   backSprite: {fileID: 1942972846, guid: b03dfe89e98cb394cb45a072cbe141b9, type: 3}
+  cardBtn: {fileID: -5611341972997492580}
 --- !u!114 &-5611341972997492580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,16 +137,4 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5563344801764534115}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4813594411310833369}
-        m_TargetAssemblyTypeName: Card, Assembly-CSharp
-        m_MethodName: OnCardClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []

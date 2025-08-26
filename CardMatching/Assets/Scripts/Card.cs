@@ -9,8 +9,18 @@ public class Card : MonoBehaviour
     public Sprite frontSprite;
     public Sprite backSprite;
 
+    public Button cardBtn;
+
     private Image image;
     private bool isFlipped = false;
+
+    private void Awake()
+    {
+        cardBtn.onClick.AddListener(() =>{
+            EventHandler.ExecuteEvent<string>(GameStaticEvents.OnAudioUpdate, "card");
+            OnCardClicked();
+        });
+    }
 
     void Start()
     {
@@ -22,7 +32,7 @@ public class Card : MonoBehaviour
     public async void InitCard()
     {
         await FlipToFront();
-        await Utils.WaitForSeconds(2);
+        await Utils.WaitForSeconds(3);
         await FlipToBack();
     }
 

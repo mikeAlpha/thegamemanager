@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f5080f0688010348b9ee6788a742549, type: 3}
+  m_Name: 4
+  m_EditorClassIdentifier: 
+  levelData:
+    cardSprites:
+    - {fileID: 1731449764, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
+    - {fileID: -458807275, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
+    - {fileID: 1055801358, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
+    - {fileID: 1443336018, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
+    - {fileID: -500805128, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
+    - {fileID: 759204928, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
+    - {fileID: -635171602, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
+    - {fileID: 1024673914, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
+    rows: 4
+    columns: 4
+    spacing: {x: 10, y: 10}
+    numOfTurns: 12

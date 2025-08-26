@@ -3,28 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class ModalUIWindow<T> : MonoBehaviour where T : ModalUIWindow<T>
+public abstract class ModalUIWindow<T> : ModalUIWindowBase where T : ModalUIWindow<T>
 {
     [SerializeField]
     protected Button closeButton;
 
-    public virtual void Start()
+    protected GameManager gameManager;
+
+    public virtual void Awake()
     {
-        closeButton.onClick.AddListener(() =>
+        if (closeButton != null)
         {
-            Close();
-        });
+            closeButton.onClick.AddListener(() =>
+            {
+                Close();
+            });
+        }
     }
 
-    public virtual T Show()
+    public override ModalUIWindowBase Show()
     {
         gameObject.SetActive(true);
         return (T)this;
     }
 
-    public virtual T Close()
+    public override ModalUIWindowBase Close()
     {
         gameObject.SetActive(false);
         return (T)this;
+    }
+
+    public override void SetGameManager(GameManager manager)
+    {
+        gameManager = manager;
     }
 }

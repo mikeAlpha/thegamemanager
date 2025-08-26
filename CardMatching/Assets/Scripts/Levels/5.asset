@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f5080f0688010348b9ee6788a742549, type: 3}
-  m_Name: 1
+  m_Name: 5
   m_EditorClassIdentifier: 
   levelData:
     cardSprites:
@@ -20,7 +20,11 @@ MonoBehaviour:
     - {fileID: 1186401886, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
     - {fileID: 1490935065, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
     - {fileID: -2084225422, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
-    rows: 2
-    columns: 3
+    - {fileID: 735617199, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
+    - {fileID: -1592962358, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
+    - {fileID: -1577484674, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
+    - {fileID: -1014258640, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
+    rows: 5
+    columns: 4
     spacing: {x: 10, y: 10}
-    numOfTurns: 6
+    numOfTurns: 20

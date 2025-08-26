@@ -17,4 +17,5 @@ public class LevelData
     public int rows = 4;
     public int columns = 4;
     public Vector2 spacing = new Vector2(10, 10);
+    public int numOfTurns;
 }
