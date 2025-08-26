@@ -14,15 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelData:
     cardSprites:
-    - {fileID: 1731449764, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
-    - {fileID: -458807275, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
-    - {fileID: 1055801358, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
-    - {fileID: 1443336018, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
-    - {fileID: -500805128, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
-    - {fileID: 759204928, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
-    - {fileID: -635171602, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
-    - {fileID: 1024673914, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
-    rows: 4
-    columns: 4
+    - {fileID: -1963263821, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
+    - {fileID: 2122021764, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
+    - {fileID: 1250080986, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
+    - {fileID: 1186401886, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
+    - {fileID: 1490935065, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
+    - {fileID: -2084225422, guid: 5fc44d0a384356b448f521d8699d5a37, type: 3}
+    rows: 2
+    columns: 3
     spacing: {x: 10, y: 10}
-    numOfTurns: 12
+    numOfTurns: 6

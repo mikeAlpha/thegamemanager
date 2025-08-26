@@ -2354,9 +2354,9 @@ MonoBehaviour:
   comboText: {fileID: 1994125380}
   levelDatas:
   - {fileID: 11400000, guid: b46f7744bdc1e8b4bbb16dd1f7210f61, type: 2}
-  - {fileID: 11400000, guid: 0debf0cf1ca5eda4b9c3790d75179a3f, type: 2}
-  - {fileID: 11400000, guid: 8944efd4067e5a641949a6a085c23448, type: 2}
   - {fileID: 11400000, guid: 34bccfa623c0a144e93fc11e524656dd, type: 2}
+  - {fileID: 11400000, guid: 8944efd4067e5a641949a6a085c23448, type: 2}
+  - {fileID: 11400000, guid: 0debf0cf1ca5eda4b9c3790d75179a3f, type: 2}
   - {fileID: 11400000, guid: 4665d915a6e109547a4a615d0dbf038e, type: 2}
   currentPlayerData:
     user_id: 
@@ -3751,7 +3751,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1825557959
 RectTransform:
   m_ObjectHideFlags: 0

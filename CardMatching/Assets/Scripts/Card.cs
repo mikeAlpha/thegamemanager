@@ -17,7 +17,6 @@ public class Card : MonoBehaviour
     private void Awake()
     {
         cardBtn.onClick.AddListener(() =>{
-            EventHandler.ExecuteEvent<string>(GameStaticEvents.OnAudioUpdate, "card");
             OnCardClicked();
         });
     }
@@ -40,6 +39,7 @@ public class Card : MonoBehaviour
     {
         if (!isFlipped && gameObject.activeSelf)
         {
+            EventHandler.ExecuteEvent<string>(GameStaticEvents.OnAudioUpdate, "card");
             await FlipToFront();
             EventHandler.ExecuteEvent(GameStaticEvents.OnCardFlippedUpdate, this);
         }
@@ -71,14 +71,17 @@ public class Card : MonoBehaviour
     {
         for (float t = 0; t < 1f; t += Time.deltaTime * 4)
         {
+            if (this == null) return;
             transform.localScale = new Vector3(Mathf.Lerp(1, 0, t), 1, 1);
             await Task.Yield();
         }
 
+        if (this == null) return;
         image.sprite = toSprite;
 
         for (float t = 0; t < 1f; t += Time.deltaTime * 4)
         {
+            if (this == null) return;
             transform.localScale = new Vector3(Mathf.Lerp(0, 1, t), 1, 1);
             await Task.Yield();
         }

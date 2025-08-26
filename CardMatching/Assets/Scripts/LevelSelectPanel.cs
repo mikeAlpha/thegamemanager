@@ -26,14 +26,15 @@ public class LevelSelectPanel : ModalUIWindow<LevelSelectPanel>
 
 
 
-            if (gameManager.currentPlayerData.last_level_id < i)
+            if (level_index > gameManager.currentPlayerData.levels.Count - 1)
             {
-                uiLvlItem.levelInfo.text = $"Lvl:{i + 1} Scr:0";
+                uiLvlItem.levelInfo.text = $"Lvl:{level_index + 1} Scr:0";
                 uiLvlItem.OnPlayBtn.interactable = false;
             }
-            else if(gameManager.currentPlayerData.last_level_id >= i)
+            else if(level_index <= gameManager.currentPlayerData.levels.Count - 1)
             {
-                uiLvlItem.levelInfo.text = $"Lvl:{i + 1} Scr:{gameManager.currentPlayerData.levels[i].score}";
+                uiLvlItem.levelInfo.text = $"Lvl:{level_index + 1} Scr:{gameManager.currentPlayerData.levels[level_index].score}";
+                uiLvlItem.OnPlayBtn.interactable = true;
             }
 
             items.Add(uiLvlItem);
